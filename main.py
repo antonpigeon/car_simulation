@@ -14,9 +14,9 @@ def sort_key(car1):
     return car1.fitness()
 
 
-screen = pygame.display.set_mode((700, 700), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((700, 700))
 cars = []
-for i in range(10):
+for i in range(100):
     cars.append(Car(40, R - 10, screen))
 finished = False
 clock = pygame.time.Clock()
@@ -41,7 +41,7 @@ while not finished:
         best_car = cars[len(cars) - 1]
         for i in range(len(cars)):
             cars[i] = Car(40, R - 10, screen)
-            cars[i].genes = best_car.genes
+            cars[i].genes = best_car.genes.copy()
             # print(cars[i].genes.an_genes)
         for car in cars:
             car.genes = car.genes.mutate()
