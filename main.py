@@ -21,6 +21,7 @@ for i in range(100):
 finished = False
 clock = pygame.time.Clock()
 dt = 0.01
+generation_counter = 1
 while not finished:
     # разметка
     pygame.draw.circle(screen, (255, 0, 0), (R, R), R, width=2)
@@ -36,7 +37,8 @@ while not finished:
         if car.is_dead is False:
             all_dead = False
     if all_dead is True:
-        print('everyone is dead...')
+        generation_counter += 1
+        print(f'generation: {generation_counter}')
         cars = sorted(cars, key=sort_key)
         best_car = cars[len(cars) - 1]
         for i in range(len(cars)):

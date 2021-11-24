@@ -1,5 +1,4 @@
 import pygame
-import random
 from genetics import *
 pygame.init()
 
@@ -21,6 +20,10 @@ class Car:
         self.is_dead = False
 
     def draw(self):
+        """
+        рисует машину (прямоугольник)
+        """
+        # FIXME: пусть прямоугольник поворачивается по направлению движения
         pygame.draw.rect(self.surface, 'yellow', (round(self.x - self.a/2), round(self.y - self.b/2),
                                                   self.a, self.b))
 
