@@ -11,7 +11,7 @@ class Car:
         self.a = 25
         self.b = 10
         self.vx = 0
-        self.vy = -2
+        self.vy = -0.00000001
         self.lifetime = 0
         self.max_at = 0  # тангециальное
         self.max_an = 0  # нормальное
@@ -35,7 +35,6 @@ class Car:
             self.vx += dt*(self.at*self.vx - self.an*self.vy)/(v + 0.0000001)
             self.vy += -dt*(-self.at*self.vy - self.an*self.vx)/(v + 0.00000001)
         else:
-            print('car died!')
             self.is_dead = True
         self.draw()
 
