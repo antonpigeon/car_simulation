@@ -24,5 +24,7 @@ class Genes:
 
     def copy(self):
         return Genes(self.at_genes.copy(), self.an_genes.copy())
+
+
 if __name__ == '__main__':
     print('this module is not for direct call!')

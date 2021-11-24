@@ -11,7 +11,7 @@ class Car:
         self.a = 25
         self.b = 10
         self.vx = 0
-        self.vy = -0.00000001
+        self.vy = -2
         self.lifetime = 0
         self.max_at = 0  # тангециальное
         self.max_an = 0  # нормальное
