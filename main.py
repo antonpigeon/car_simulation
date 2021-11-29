@@ -36,19 +36,15 @@ while not finished:
 
         cars.sort()
 
-        print(cars)
         best_car1, best_car2 = cars[len(cars) - 1], cars[len(cars) - 2]
         best_car1.color = 'red'
         best_car2.color = 'red'
         for c in (best_car2, best_car1):
             c.update(dt)  # чтобы цвет поменялся
         pygame.display.update()
-        print(best_car1, best_car2)
         for i in range(len(cars)):
             cars[i] = Car(40, R - 10, screen)
             cars[i].genes = best_car1.genes.crossover(best_car2.genes)
-            print(cars[i].genes)
-        print(cars[0].genes is cars[1].genes)
         for car in cars:
             car.genes.mutate()
     pygame.display.update()
