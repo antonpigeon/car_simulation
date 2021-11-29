@@ -43,7 +43,7 @@ class Car:
             else:
                 self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
             if v < 2:
-                abs_mod = min(abs(self.an), 2)
+                abs_mod = min(abs(self.an), 5)
                 if self.genes.an_genes[self.lifetime] < 0:
                     self.an = -abs_mod
                 else:
