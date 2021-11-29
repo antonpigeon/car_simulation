@@ -53,7 +53,7 @@ class Car:
 
     def __lt__(self, other_car):
         """
-        метод переопределяет оператор "меньше" для класса
+        метод переопределяет оператор "меньше" для класса Car
         """
         return self.fitness() < other_car.fitness()
 
