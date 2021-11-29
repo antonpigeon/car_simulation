@@ -39,7 +39,7 @@ while not finished:
     if all_dead is True:
         generation_counter += 1
         print(f'generation: {generation_counter}')
-        cars.sort()gtht
+        cars.sort()
         best_car = cars[len(cars) - 1]
         for i in range(len(cars)):
             cars[i] = Car(40, R - 10, screen)
