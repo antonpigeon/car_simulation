@@ -40,10 +40,16 @@ class Car:
             v = (self.vx**2 + self.vy**2)**0.5
             k = self.curvature()
             an_max = (v ** 2) * k
-            if self.genes.an_genes[self.lifetime] < 0:
-                self.an = -abs(max(self.genes.an_genes[self.lifetime], an_max))
+            if self.genes.an_genes[self.lifetime] < 0 :
+                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10)) * (-1)
             else:
-                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max))
+                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
+            if v < 2:
+                abs_mod = min(abs(self.an), 5)
+                if self.genes.an_genes[self.lifetime] < 0:
+                    self.an = -abs_mod
+                else:
+                    self.an = abs_mod
             self.at = self.genes.at_genes[self.lifetime]
             self.lifetime += 1
             self.x += self.vx
