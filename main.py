@@ -6,7 +6,6 @@ pygame.init()
 r = 250
 R = 330
 
-
 screen = pygame.display.set_mode((700, 700))
 
 population_size = 100
