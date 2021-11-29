@@ -47,7 +47,7 @@ class Car:
             self.x += self.vx
             self.y += self.vy
             self.vx += dt*(self.at*self.vx - self.an*self.vy)/(v + 0.0000001)
-            self.vy += -dt*(-self.at*self.vy - self.an*self.vx)/(v + 0.00000001)
+            self.vy += dt*(self.at*self.vy + self.an*self.vx)/(v + 0.00000001)
         else:
             self.is_dead = True
         self.draw()
@@ -61,6 +61,12 @@ class Car:
         пока просто по расстоянию
         """
         return self.x**2 + (self.y - R)**2
+
+    def __lt__(self, other_car):
+        """
+        метод переопределяет оператор "меньше" для класса Car
+        """
+        return self.fitness() < other_car.fitness()
 
 
 if __name__ == '__main__':
