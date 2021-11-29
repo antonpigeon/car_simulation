@@ -23,7 +23,7 @@ class Car:
         """
         рисует машину (прямоугольник)
         """
-        # FIXME: пусть прямоугольник поворачивается по направлению движения
+        # пусть прямоугольник поворачивается по направлению движения
         pygame.draw.rect(self.surface, 'yellow', (round(self.x - self.a/2), round(self.y - self.b/2),
                                                   self.a, self.b))
 

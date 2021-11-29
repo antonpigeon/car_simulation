@@ -10,9 +10,17 @@ class Genes:
     def __init__(self, at_genes=[], an_genes=[]):
         self.at_genes = at_genes
         self.an_genes = an_genes
+        if not at_genes:
+            for i in range(self.genom_length):
+                self.at_genes.append(random.randint(*self.at_random_range))
+                self.an_genes.append(random.randint(*self.an_random_range))
+
+    def crossover(self, other_genes):
+        result = Genes()
         for i in range(self.genom_length):
-            self.at_genes.append(random.randint(*self.at_random_range))
-            self.an_genes.append(random.randint(*self.an_random_range))
+            result.at_genes[i] = self.at_genes[i] if random.random() < 0.5 else other_genes.at_genes[i]
+            result.an_genes[i] = self.an_genes[i] if random.random() < 0.5 else other_genes.an_genes[i]
+            return result
 
     def mutate(self):
         for i in range(self.genom_length):
