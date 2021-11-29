@@ -8,8 +8,10 @@ R = 330
 
 
 screen = pygame.display.set_mode((700, 700))
+
+population_size = 100
 cars = []
-for i in range(100):
+for i in range(population_size):
     cars.append(Car(40, R - 10, screen))
 finished = False
 clock = pygame.time.Clock()
@@ -35,13 +37,21 @@ while not finished:
 
         cars.sort()
 
-        best_car = cars[len(cars) - 1]
+        print(cars)
+        best_car1, best_car2 = cars[len(cars) - 1], cars[len(cars) - 2]
+        best_car1.color = 'red'
+        best_car2.color = 'red'
+        for c in (best_car2, best_car1):
+            c.update(dt)  # чтобы цвет поменялся
+        pygame.display.update()
+        print(best_car1, best_car2)
         for i in range(len(cars)):
             cars[i] = Car(40, R - 10, screen)
-            cars[i].genes = best_car.genes.copy()
-            # print(cars[i].genes.an_genes)
+            cars[i].genes = best_car1.genes.crossover(best_car2.genes)
+            print(cars[i].genes)
+        print(cars[0].genes is cars[1].genes)
         for car in cars:
-            car.genes = car.genes.mutate()
+            car.genes.mutate()
     pygame.display.update()
     screen.fill('black')
 

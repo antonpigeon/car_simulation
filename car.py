@@ -4,9 +4,10 @@ pygame.init()
 
 
 class Car:
-    def __init__(self, x, y, surface):
+    def __init__(self, x, y, surface, color='yellow'):
         self.surface = surface
         self.x, self.y = x, y
+        self.color = color
         self.a = 25
         self.b = 10
         self.vx = 0
@@ -24,8 +25,9 @@ class Car:
         рисует машину (прямоугольник)
         """
         # пусть прямоугольник поворачивается по направлению движения
-        pygame.draw.rect(self.surface, 'yellow', (round(self.x - self.a/2), round(self.y - self.b/2),
+        pygame.draw.rect(self.surface, self.color, (round(self.x - self.a/2), round(self.y - self.b/2),
                                                   self.a, self.b))
+
     def curvature(self):
         v = (self.vx ** 2 + self.vy ** 2) ** 0.5
         ax = (self.at * self.vx - self.an * self.vy) / (v + 0.0000001)
@@ -38,10 +40,10 @@ class Car:
             v = (self.vx**2 + self.vy**2)**0.5
             k = self.curvature()
             an_max = (v ** 2) * k
-            if self.genes.an_genes[self.lifetime] < 0 :
-                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10)) * (-1)
+            if self.genes.an_genes[self.lifetime] < 0:
+                self.an = -abs(max(self.genes.an_genes[self.lifetime], an_max))
             else:
-                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
+                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max))
             self.at = self.genes.at_genes[self.lifetime]
             self.lifetime += 1
             self.x += self.vx
