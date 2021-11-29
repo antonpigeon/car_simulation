@@ -51,6 +51,12 @@ class Car:
         """
         return self.x**2 + (self.y - R)**2
 
+    def __lt__(self, other_car):
+        """
+        метод переопределяет оператор "меньше" для класса
+        """
+        return self.fitness() < other_car.fitness()
+
 
 if __name__ == '__main__':
     print('this module is not for direct call!')
