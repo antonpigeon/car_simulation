@@ -20,6 +20,9 @@ class Car:
         self.genes = Genes()
         self.is_dead = False
 
+    def __str__(self):
+        return f"Car at {(self.x, self.y)}, lived for {self.lifetime}, is now " + "dead" if self.is_dead else "alive"
+
     def draw(self):
         """
         рисует машину (прямоугольник)
@@ -74,7 +77,11 @@ class Car:
         """
         метод переопределяет оператор "меньше" для класса Car
         """
-        return self.fitness() < other_car.fitness()
+        diff = self.fitness() - other_car.fitness()
+        if abs(diff) > 5:
+            return diff < 0
+        else:
+            return self.lifetime > other_car.lifetime
 
 
 if __name__ == '__main__':
