@@ -4,13 +4,14 @@ pygame.init()
 
 
 class CarGenesTooShortError(Exception):
-    def __init__(self, genom_length, car_x, car_y):
-        self.genom_length = genom_length
+    def __init__(self, genome_length, car_x, car_y):
+        self.genome_length = genome_length
         self.x = car_x
         self.y = car_y
 
     def __str__(self):
-        return f"Genom length of {self.genom_length} is not enough for car at {self.x}, {self.y}! Stopping simulation."
+        return f"Genome length of {self.genome_length} is not enough for car at {self.x}, {self.y}! " \
+               f"Stopping simulation."
 
 
 class Car:
