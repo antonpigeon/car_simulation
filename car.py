@@ -3,6 +3,16 @@ from genetics import *
 pygame.init()
 
 
+class CarGenesTooShortError(Exception):
+    def __init__(self, genom_length, car_x, car_y):
+        self.genom_length = genom_length
+        self.x = car_x
+        self.y = car_y
+
+    def __str__(self):
+        return f"Genom length of {self.genom_length} is not enough for car at {self.x}, {self.y}! Stopping simulation."
+
+
 class Car:
     def __init__(self, x, y, surface, color='yellow'):
         self.surface = surface
@@ -43,17 +53,24 @@ class Car:
             v = (self.vx**2 + self.vy**2)**0.5
             k = self.curvature()
             an_max = (v ** 2) * k
-            if self.genes.an_genes[self.lifetime] < 0 :
-                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10)) * (-1)
-            else:
-                self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
-            if v < 2:
-                abs_mod = min(abs(self.an), 5)
-                if self.genes.an_genes[self.lifetime] < 0:
-                    self.an = -abs_mod
+            try:
+                if self.genes.an_genes[self.lifetime] < 0 :
+                    self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10)) * (-1)
                 else:
-                    self.an = abs_mod
-            self.at = self.genes.at_genes[self.lifetime]
+                    self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
+                if v < 2:
+                    abs_mod = min(abs(self.an), 5)
+                    if self.genes.an_genes[self.lifetime] < 0:
+                        self.an = -abs_mod
+                    else:
+                        self.an = abs_mod
+                self.at = self.genes.at_genes[self.lifetime]
+            except IndexError:
+                self.color = 'blue'
+                self.draw()
+                pygame.display.update()
+                pygame.time.wait(500)
+                raise CarGenesTooShortError(self.genes.genom_length, self.x, self.y)
             self.lifetime += 1
             self.x += self.vx
             self.y += self.vy
