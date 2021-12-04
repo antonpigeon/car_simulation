@@ -1,4 +1,4 @@
-from game import Game
+from game_input import Game
 
 g = Game()
 

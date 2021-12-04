@@ -5,7 +5,7 @@ class Genes:
     at_random_range = (-5, 5)
     an_random_range = (-10, 10)
     genome_length = 1000
-    mutation_chance = 0.00005
+    mutation_chance = 0.0002
 
     def __init__(self):
         self.at_genes = []
