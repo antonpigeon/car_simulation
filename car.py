@@ -39,26 +39,43 @@ class Car:
         рисует машину (прямоугольник)
         """
         # пусть прямоугольник поворачивается по направлению движения
-        pygame.draw.rect(self.surface, self.color, (round(self.x - self.a/2), round(self.y - self.b/2),
-                                                    self.a, self.b))
+        #pygame.draw.rect(self.surface, self.color, (round(self.x - self.a/2), round(self.y - self.b/2),
+        #                                            self.a, self.b))
+        cos = self.vx / (self.vx ** 2 + self.vy ** 2) ** 0.5
+        sin = self.vy / (self.vx ** 2 + self.vy ** 2) ** 0.5
+        Ax = self.x + (-self.a / 2) * cos - (self.b / 2) * sin
+        Bx = self.x + (self.a / 2) * cos - (self.b / 2) * sin
+        Cx = self.x + (self.a / 2) * cos - (-self.b / 2) * sin
+        Dx = self.x + (-self.a / 2) * cos - (-self.b / 2) * sin
+        Ay = self.y + (-self.a / 2) * sin + (self.b / 2) * cos
+        By = self.y + (self.a / 2) * sin + (self.b / 2) * cos
+        Cy = self.y + (self.a / 2) * sin + (-self.b / 2) * cos
+        Dy = self.y + (-self.a / 2) * sin + (-self.b / 2) * cos
+        pygame.draw.polygon(self.surface, self.color, [(Ax, Ay), (Bx, By), (Cx, Cy), (Dx, Dy)])
 
     def curvature(self):
         v = (self.vx ** 2 + self.vy ** 2) ** 0.5
         ax = (self.at * self.vx - self.an * self.vy) / (v + 0.0000001)
         ay = -(-self.at * self.vy - self.an * self.vx) / (v + 0.00000001)
-        k = (abs(self.vx * ay - self.vy * ax)) / ((self.vx**2 + self.vy**2) ** 1.5)
+        k = (abs(self.vx * ay - self.vy * ax)) / ((self.vx ** 2 + self.vy ** 2) ** 1.5)
         return k
 
     def update(self, dt):
         if self.is_dead is False and self.is_alive() is True:  # переменная и функция не путать!
-            v = (self.vx**2 + self.vy**2)**0.5
+            v = (self.vx**2 + self.vy**2) ** 0.5
             k = self.curvature()
             an_max = (v ** 2) * k
             try:
                 if self.genes.an_genes[self.lifetime] < 0:
-                    self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10)) * (-1)
+                    if self.lifetime > 0:
+                        self.an = (min(abs(self.genes.an_genes[self.lifetime]), an_max)) * (-1)
+                    else:
+                        self.an = self.genes.an_genes[self.lifetime]
                 else:
-                    self.an = abs(max(self.genes.an_genes[self.lifetime], an_max, 10))
+                    if self.lifetime > 0:
+                        self.an = (max(self.genes.an_genes[self.lifetime], an_max))
+                    else:
+                        self.an = self.genes.an_genes[self.lifetime]
                 if v < 2:
                     abs_mod = min(abs(self.an), 5)
                     if self.genes.an_genes[self.lifetime] < 0:
@@ -75,8 +92,12 @@ class Car:
             self.lifetime += 1
             self.x += self.vx
             self.y += self.vy
-            self.vx += dt*(self.at*self.vx - self.an*self.vy)/(v + 0.0000001)
-            self.vy += dt*(self.at*self.vy + self.an*self.vx)/(v + 0.00000001)
+            if v != 0:
+                self.vx += dt*(self.at*self.vx - self.an*self.vy)/(v + 0.0000001)
+                self.vy += dt*(self.at*self.vy + self.an*self.vx)/(v + 0.00000001)
+            else:
+                self.vx += dt * (abs(self.at) * self.vx - self.an * self.vy) / (v + 0.0000001)
+                self.vy += dt * (abs(self.at) * self.vy + self.an * self.vx) / (v + 0.00000001)
         else:
             self.is_dead = True
         self.draw()
