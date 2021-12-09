@@ -15,7 +15,7 @@ class CarGenesTooShortError(Exception):
 
 
 class Car:
-    def __init__(self, x, y, surface, color='yellow'):
+    def __init__(self, x, y, surface, mutation_chance, color='yellow'):
         self.surface = surface
         self.x, self.y = x, y
         self.color = color
@@ -28,7 +28,7 @@ class Car:
         self.max_an = 0  # нормальное
         self.at = self.max_at
         self.an = self.max_an
-        self.genes = Genes()
+        self.genes = Genes(mutation_chance)
         self.is_dead = False
 
     def __str__(self):
@@ -38,9 +38,6 @@ class Car:
         """
         рисует машину (прямоугольник)
         """
-        # пусть прямоугольник поворачивается по направлению движения
-        #pygame.draw.rect(self.surface, self.color, (round(self.x - self.a/2), round(self.y - self.b/2),
-        #                                            self.a, self.b))
         cos = self.vx / (self.vx ** 2 + self.vy ** 2) ** 0.5
         sin = self.vy / (self.vx ** 2 + self.vy ** 2) ** 0.5
         Ax = self.x + (-self.a / 2) * cos - (self.b / 2) * sin
@@ -124,4 +121,4 @@ class Car:
 
 
 if __name__ == '__main__':
-    print('this module is not for direct call!')
+    print('This module is not for direct call!')

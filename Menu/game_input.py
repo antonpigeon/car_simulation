@@ -1,57 +1,33 @@
-import pygame
 from menu_input import *
+pygame.init()
 
 
-class Game():
-    def __init__(self):
-        pygame.init()
-        self.running, self.playing = True, False
-        self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 400, 400
-        self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
-        self.window = pygame.display.set_mode(
-            ((self.DISPLAY_W, self.DISPLAY_H)))
+class Game:
+    def __init__(self, window: pygame.Surface):
+        self.window = window
         self.BLACK, self.WHITE = (30, 30, 30), (255, 255, 255)
-        self.main_menu = MainMenu(self)
-        self.options = OptionsMenu(self)
-        self.curr_menu = self.main_menu
+        self.curr_menu = MainMenu(self.window)
+        self.options_params = [100, 0.001, 20]  # Параметры options: размер популяции, шанс мутации, кол-во поколений
 
-    def game_loop(self):
-        while self.playing:
-            self.check_events()
-            if self.START_KEY:
-                self.playing = False
-            self.display.fill(self.BLACK)
-            self.draw_text('Игра началась', 20, self.DISPLAY_W / 2,
-                           self.DISPLAY_H / 2)
-            self.window.blit(self.display, (0, 0))
-            pygame.display.update()
-            self.reset_keys()
+    def run_menus(self):
+        while True:
+            self.window.fill((30, 30, 30))
+            to_run = self.curr_menu.run()  # Меню делает свои дела и возвращает, к какому меню перейти
+            assert type(to_run) is int
+            if to_run == 0:
+                pygame.quit()
+                break
+            elif to_run == 1:
+                self.curr_menu = MainMenu(self.window)
+            elif to_run == 2:
+                self.curr_menu = OptionsMenu(self.window, self.options_params)
+            elif to_run == 3:
+                self.curr_menu = GameMenu(self.window, self.options_params)
+            # elif to_run == 4:
+                # self.curr_menu = GraphMenu(self.window, self.options_params, self.game_data)
 
-    def check_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running, self.playing = False, False
-                self.curr_menu.run_display = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.START_KEY = True
-                if event.key == pygame.K_BACKSPACE:
-                    self.BACK_KEY = True
-                if event.key == pygame.K_DOWN:
-                    self.DOWN_KEY = True
-                if event.key == pygame.K_UP:
-                    self.UP_KEY = True
 
-    def reset_keys(self):
-        self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-
-    def draw_text(self, text, size, x, y):
-        font = pygame.font.Font(None, size)
-        text_surface = font.render(text, True, self.WHITE)
-        text_rect = text_surface.get_rect()
-        text_rect.center = (x, y)
-        self.display.blit(text_surface, text_rect)
-
-    def draw_rect(self, color, value):
-        pygame.draw.rect(self.display, color, value)
+if __name__ == '__main__':
+    screen = pygame.display.set_mode((400, 400), pygame.FULLSCREEN)
+    g = Game(screen)
+    g.run_menus()

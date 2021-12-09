@@ -4,10 +4,10 @@ import random
 class Genes:
     at_random_range = (-5, 5)
     an_random_range = (-10, 10)
-    genome_length = 1000
-    mutation_chance = 0.0002
+    genome_length = 2000
 
-    def __init__(self):
+    def __init__(self, mutation_chance):
+        self.mutation_chance = mutation_chance
         self.at_genes = []
         self.an_genes = []
         for i in range(self.genome_length):
@@ -18,7 +18,7 @@ class Genes:
         return str(self.at_genes) + str(self.an_genes)
 
     def crossover(self, other_genes):
-        result = Genes()
+        result = Genes(self.mutation_chance)
         for i in range(self.genome_length):
             if random.random() < 0.5:
                 # print(f"crossover in gene {i}")
@@ -38,4 +38,4 @@ class Genes:
 
 
 if __name__ == '__main__':
-    print('this module is not for direct call!')
+    print('This module is not for direct call!')
