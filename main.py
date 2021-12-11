@@ -1,60 +1,33 @@
-import pygame
-import random
-from car import *
+from menus import *
 pygame.init()
 
-r = 250
-R = 330
 
-screen = pygame.display.set_mode((700, 700))
+class Game:
+    def __init__(self, window: pygame.Surface):
+        self.window = window
+        self.BLACK, self.WHITE = (30, 30, 30), (255, 255, 255)
+        self.curr_menu = MainMenu(self.window)
+        self.options_params = [100, 0.001, 20]  # Параметры options: размер популяции, шанс мутации, кол-во поколений
 
-population_size = 100
-cars = []
-for i in range(population_size):
-    cars.append(Car(40, R - 10, screen))
-finished = False
-clock = pygame.time.Clock()
-dt = 0.01
-generation_counter = 1
-while not finished:
-    # разметка
-    pygame.draw.circle(screen, (255, 0, 0), (R, R), R, width=2)
-    pygame.draw.circle(screen, (255, 0, 0), (R, R), r, width=2)
-    pygame.draw.line(screen, 'red', (0, R), (R, R))
-    pygame.draw.line(screen, 'red', (R, 0), (R, R))
-    # обновление
-    clock.tick(1 // dt)
-
-    all_dead = True  # флаг того, что живых не осталось
-    for car in cars:
-        car.update(dt)
-        if car.is_dead is False:
-            all_dead = False
-    if all_dead is True:
-        generation_counter += 1
-        print(f'generation: {generation_counter}')
-
-        cars.sort()
-
-        best_car1, best_car2 = cars[len(cars) - 1], cars[len(cars) - 2]
-        best_car1.color = 'red'
-        best_car2.color = 'red'
-        for c in (best_car2, best_car1):
-            c.update(dt)  # чтобы цвет поменялся
-        pygame.display.update()
-        for i in range(len(cars)):
-            cars[i] = Car(40, R - 10, screen)
-            cars[i].genes = best_car1.genes.crossover(best_car2.genes)
-        for car in cars:
-            car.genes.mutate()
-    pygame.display.update()
-    screen.fill('black')
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            finished = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+    def run_menus(self):
+        while True:
+            self.window.fill((30, 30, 30))
+            to_run = self.curr_menu.run()  # Меню делает свои дела и возвращает, к какому меню перейти
+            assert type(to_run) is int
+            if to_run == 0:
                 pygame.quit()
-                finished = True
+                break
+            elif to_run == 1:
+                self.curr_menu = MainMenu(self.window)
+            elif to_run == 2:
+                self.curr_menu = OptionsMenu(self.window, self.options_params)
+            elif to_run == 3:
+                self.curr_menu = GameMenu(self.window, self.options_params)
+            # elif to_run == 4:
+                # self.curr_menu = GraphMenu(self.window, self.options_params, self.game_data)
+
+
+if __name__ == '__main__':
+    screen = pygame.display.set_mode((700, 700))
+    g = Game(screen)
+    g.run_menus()
