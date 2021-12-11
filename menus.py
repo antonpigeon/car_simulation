@@ -1,3 +1,5 @@
+import pygame
+
 from car import *
 pygame.font.init()
 
@@ -13,6 +15,7 @@ colors = [red, blue, yellow, green, magenta, cyan]
 
 COLOR_INACTIVE = cyan
 COLOR_ACTIVE = blue
+COLOR_ERROR = red
 TITLE = pygame.font.Font(None, 27)
 FONT = pygame.font.Font(None, 18)
 
@@ -132,6 +135,7 @@ class OptionsMenu(Menu):
         print('running options menu')
         Menu.__init__(self, screen)
         self.button_start = pygame.Rect(100, 320, 200, 25)
+        self.button_back = pygame.Rect(100, 390, 200, 25)
 
         input_box1 = InputBox(100, 130, 140, 25, str(data[0]))
         input_box2 = InputBox(100, 200, 140, 25, str(data[1]))
@@ -140,21 +144,49 @@ class OptionsMenu(Menu):
 
         self.data = data
         assert type(self.data) is list
-        assert len(self.data) <= 3
+        assert len(self.data) == 3
+
+    def data_str_to_value(self):
+        for i in range(len(self.data)):
+            try:
+                self.data[i] = float(self.data[i]) if i == 1 else int(self.data[i])
+                print(type(self.data[i]))
+            except ValueError:
+                self.input_boxes[i].color = COLOR_ERROR
+                self.draw_text('Это значение должно быть ' + ('десятичной дробью!' if i == 1 else 'целым!'),
+                               self.input_boxes[i].rect[3] - 5, self.input_boxes[i].rect[0]
+                               + self.input_boxes[i].rect[2] + 200,
+                               self.input_boxes[i].rect[1])
+                pygame.display.update((self.input_boxes[i].rect[0] + self.input_boxes[i].rect[2],
+                                      self.input_boxes[i].rect[1] - 30, 1000, 60))
+                return False
+        if self.data[1] > 1:
+            self.draw_text('Это значение должно быть между 0 и 1!',
+                           self.input_boxes[1].rect[3] - 5, self.input_boxes[1].rect[0]
+                           + self.input_boxes[1].rect[2] + 200,
+                           self.input_boxes[1].rect[1])
+            pygame.display.update((self.input_boxes[1].rect[0] + self.input_boxes[1].rect[2],
+                                   self.input_boxes[1].rect[1] - 30, 1000, 60))
+            return False
+        return True
 
     def run(self):
         while True:  # да простят меня боги
             for event in pygame.event.get():
+                self.screen.fill((30, 30, 30))
                 if event.type == pygame.QUIT:
                     return 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_start.collidepoint(event.pos):
-                        print(self.data)
-                        return 3
+                        if self.data_str_to_value() is True:
+                            return 3
+                        else:
+                            pygame.time.wait(500)
+                    if self.button_back.collidepoint(event.pos):
+                        return 1
 
                 for box in self.input_boxes:
                     box.handle_event(event)
-                self.screen.fill((30, 30, 30))
                 text = FONT.render('Введите параметры для игры .........',
                                    True, white)
                 self.screen.blit(text,
@@ -175,6 +207,11 @@ class OptionsMenu(Menu):
                 self.screen.blit(text,
                                  (self.button_start.x + 65, self.button_start.y + 7))
 
+                pygame.draw.rect(self.screen, yellow, self.button_back)
+                text = FONT.render('Назад', True, black)
+                self.screen.blit(text,
+                                 (self.button_back.x + 65, self.button_back.y + 7))
+
                 # если параметр не умещается в длину поля для ввода данных
                 for box in self.input_boxes:
                     box.update()
@@ -184,7 +221,7 @@ class OptionsMenu(Menu):
                     box.draw(self.screen)
 
             for i in range(len(self.input_boxes)):
-                self.data[i] = (float(self.input_boxes[i].get_data()))
+                self.data[i] = self.input_boxes[i].get_data()
 
             pygame.display.update()
             self.clock.tick(30)
@@ -200,7 +237,7 @@ class GameMenu(Menu):
         self.mutation_chance = params[1]
         self.generation_limit = params[2]
         self.cars = []
-        for i in range(int(self.population_size)):
+        for i in range(self.population_size):
             self.cars.append(Car(40, self.R - 10, screen, self.mutation_chance))
         self.dt = 0.01
         self.generation_counter = 1
@@ -213,7 +250,7 @@ class GameMenu(Menu):
             pygame.draw.line(self.screen, 'red', (0, self.R), (self.R, self.R))
             pygame.draw.line(self.screen, 'red', (self.R, 0), (self.R, self.R))
 
-            self.draw_text(f'Generation: {self.generation_counter}', 15, 30, 10)
+            self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 30, 10)
             # обновление
             self.clock.tick(round(1 // self.dt))
 
