@@ -13,12 +13,13 @@ class Game:
         while True:
             self.window.fill((30, 30, 30))
             to_run = self.curr_menu.run()  # Меню делает свои дела и возвращает, к какому меню перейти
+            # print(to_run)
             assert type(to_run) is int
             if to_run == 0:
                 pygame.quit()
                 break
-            elif to_run == 1:
-                self.curr_menu = MainMenu(self.window)
+            #elif to_run == 1:
+                #self.curr_menu = MainMenu(self.window)
             elif to_run == 2:
                 self.curr_menu = OptionsMenu(self.window, self.options_params)
             elif to_run == 3:

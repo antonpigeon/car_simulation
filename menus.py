@@ -13,7 +13,7 @@ colors = [red, blue, yellow, green, magenta, cyan]
 
 COLOR_INACTIVE = cyan
 COLOR_ACTIVE = blue
-TITLE = pygame.font.Font(None, 27)
+TITLE = pygame.font.Font(None, 37)
 FONT = pygame.font.Font(None, 18)
 
 
@@ -96,8 +96,8 @@ class MainMenu(Menu):
         Menu.__init__(self, screen)
         print('Running main menu')
 
-        self.button_options = pygame.Rect(100, 170, 200, 25)
-        self.button_quit = pygame.Rect(100, 230, 200, 25)
+        self.button_options = pygame.Rect(250, 320, 200, 25)
+        self.button_quit = pygame.Rect(250, 380, 200, 25)
 
     def run(self):
         while True:  # да простят меня боги
@@ -131,11 +131,11 @@ class OptionsMenu(Menu):
     def __init__(self, screen, data):
         print('running options menu')
         Menu.__init__(self, screen)
-        self.button_start = pygame.Rect(100, 320, 200, 25)
+        self.button_start = pygame.Rect(250, 400, 200, 25)
 
-        input_box1 = InputBox(100, 130, 140, 25, str(data[0]))
-        input_box2 = InputBox(100, 200, 140, 25, str(data[1]))
-        input_box3 = InputBox(100, 270, 140, 25, str(data[2]))
+        input_box1 = InputBox(250, 230, 140, 25, str(data[0]))
+        input_box2 = InputBox(250, 290, 140, 25, str(data[1]))
+        input_box3 = InputBox(250, 350, 140, 25, str(data[2]))
         self.input_boxes = [input_box1, input_box2, input_box3]
 
         self.data = data
@@ -173,7 +173,7 @@ class OptionsMenu(Menu):
                 pygame.draw.rect(self.screen, yellow, self.button_start)
                 text = FONT.render('Начать', True, black)
                 self.screen.blit(text,
-                                 (self.button_start.x + 65, self.button_start.y + 7))
+                                 (self.button_start.x + 80, self.button_start.y + 7))
 
                 # если параметр не умещается в длину поля для ввода данных
                 for box in self.input_boxes:
