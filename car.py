@@ -23,6 +23,7 @@ class Car:
         self.b = 10
         self.vx = 0
         self.vy = -1
+        self.k = 0
         self.lifetime = 0
         self.max_at = 0  # тангециальное
         self.max_an = 0  # нормальное
@@ -103,21 +104,34 @@ class Car:
         return R ** 2 > (self.x - R) ** 2 + (self.y - R) ** 2 > r ** 2
 
     def fitness(self, R=330):
+
         """
         оценивает успешность машины
         пока просто по расстоянию
         """
-        return self.x**2 + (self.y - R)**2
+        cos = ((self.x - R)**2+(self.x - R)**2 + 290**2 + 100 - ((self.x - 40)**2+(self.x - R + 10)**2))/(2*(((self.x - R)**2+(self.x - R)**2)*(290**2 + 100))**0.5)
+        if self.x <= R and self.y <= R:
+            return (1 - cos ** 2) ** 0.5
+        elif self.x > R > self.y:
+            return (-1 * cos) + 2
+        elif self.x >= R and self.y >= R:
+            return (1 - cos ** 2) ** 0.5 + 4
+        elif self.y > R > self.x:
+                return cos + 6
 
-    def __lt__(self, other_car):
+
+    def __lt__(self, other_car, R=330):
         """
-        метод переопределяет оператор "меньше" для класса Car
-        """
-        diff = self.fitness() - other_car.fitness()
-        if abs(diff) > 5:
-            return diff < 0
+                метод переопределяет оператор "меньше" для класса Car
+                """
+        if abs(other_car.fitness() - self.fitness()) > 1:
+            if self.fitness() < other_car.fitness():
+                return True
         else:
-            return self.lifetime > other_car.lifetime
+            if self.lifetime < other_car.lifetime:
+                return True
+
+
 
 
 if __name__ == '__main__':
