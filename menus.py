@@ -99,8 +99,8 @@ class MainMenu(Menu):
         Menu.__init__(self, screen)
         print('Running main menu')
 
-        self.button_options = pygame.Rect(100, 170, 200, 25)
-        self.button_quit = pygame.Rect(100, 230, 200, 25)
+        self.button_options = pygame.Rect(self.screen.get_width()//2 - 100, self.screen.get_height()//2 - 13, 200, 25)
+        self.button_quit = pygame.Rect(self.screen.get_width()//2 - 100, 5*self.screen.get_height()//8 - 13, 200, 25)
 
     def run(self):
         while True:  # да простят меня боги
@@ -134,8 +134,9 @@ class OptionsMenu(Menu):
     def __init__(self, screen, data):
         print('running options menu')
         Menu.__init__(self, screen)
-        self.button_start = pygame.Rect(100, 320, 200, 25)
-        self.button_back = pygame.Rect(100, 390, 200, 25)
+        self.button_start = pygame.Rect(self.screen.get_width()//2 - 100, self.screen.get_height()//2 - 13, 200, 25)
+
+        self.button_back = pygame.Rect(self.screen.get_width()//2 - 100, 5*self.screen.get_height()//8 - 13, 200, 25)
 
         input_box1 = InputBox(100, 130, 140, 25, str(data[0]))
         input_box2 = InputBox(100, 200, 140, 25, str(data[1]))
@@ -155,19 +156,29 @@ class OptionsMenu(Menu):
                 self.input_boxes[i].color = COLOR_ERROR
                 self.draw_text('Это значение должно быть ' + ('десятичной дробью!' if i == 1 else 'целым!'),
                                self.input_boxes[i].rect[3] - 5, self.input_boxes[i].rect[0]
-                               + self.input_boxes[i].rect[2] + 200,
-                               self.input_boxes[i].rect[1])
+                               + self.input_boxes[i].rect[2] + 175,
+                               self.input_boxes[i].rect[1] + 10)
                 pygame.display.update((self.input_boxes[i].rect[0] + self.input_boxes[i].rect[2],
                                       self.input_boxes[i].rect[1] - 30, 1000, 60))
                 return False
-        if self.data[1] > 1:
+        if self.data[1] > 1 or self.data[1] < 0:
             self.draw_text('Это значение должно быть между 0 и 1!',
                            self.input_boxes[1].rect[3] - 5, self.input_boxes[1].rect[0]
-                           + self.input_boxes[1].rect[2] + 200,
+                           + self.input_boxes[1].rect[2] + 175,
                            self.input_boxes[1].rect[1])
             pygame.display.update((self.input_boxes[1].rect[0] + self.input_boxes[1].rect[2],
                                    self.input_boxes[1].rect[1] - 30, 1000, 60))
             return False
+        for i in 0, 2:
+            if self.data[i] < 2:
+                self.input_boxes[i].color = COLOR_ERROR
+                self.draw_text('Это значение должно быть не меньше 2!',
+                               self.input_boxes[i].rect[3] - 5, self.input_boxes[i].rect[0]
+                               + self.input_boxes[i].rect[2] + 175,
+                               self.input_boxes[i].rect[1] + 10)
+                pygame.display.update((self.input_boxes[i].rect[0] + self.input_boxes[i].rect[2],
+                                       self.input_boxes[i].rect[1] - 30, 1000, 60))
+                return False
         return True
 
     def run(self):
@@ -187,7 +198,7 @@ class OptionsMenu(Menu):
 
                 for box in self.input_boxes:
                     box.handle_event(event)
-                text = FONT.render('Введите параметры для игры .........',
+                text = FONT.render('Введите параметры:',
                                    True, white)
                 self.screen.blit(text,
                                  (self.input_boxes[0].rect.x, self.input_boxes[0].rect.y - 60))
@@ -250,7 +261,7 @@ class GameMenu(Menu):
             pygame.draw.line(self.screen, 'red', (0, self.R), (self.R, self.R))
             pygame.draw.line(self.screen, 'red', (self.R, 0), (self.R, self.R))
 
-            self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 30, 10)
+            self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 100, 10)
             # обновление
             self.clock.tick(round(1 // self.dt))
 

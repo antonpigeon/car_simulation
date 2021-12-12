@@ -1,3 +1,5 @@
+import pygame
+
 from menus import *
 pygame.init()
 
@@ -28,6 +30,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    screen = pygame.display.set_mode((700, 700))
+    screen = pygame.display.set_mode((700, 700), pygame.FULLSCREEN)
     g = Game(screen)
     g.run_menus()
