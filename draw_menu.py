@@ -24,9 +24,10 @@ class DrawMenu(Menu):
         for i in range(distance):
             x = int(start[0]+float(i)/distance*dx)
             y = int(start[1]+float(i)/distance*dy)
+
             pygame.draw.circle(self.screen, color, (x, y), radius)
             self.fitness_list[i] = [x, y]
-            self.fitness_list = []
+
     def run(self):
         finished = False
         FPS = 30
