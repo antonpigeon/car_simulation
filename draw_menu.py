@@ -15,7 +15,7 @@ class DrawMenu(Menu):
         self.road_width = 30
         self.color = 255, 0, 0
         self.pixel_list = [[False]*700]*700
-        self.fitness_list = []
+        self.fitness_list = [0, 0]*700
 
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
