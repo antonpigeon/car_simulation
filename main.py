@@ -1,6 +1,9 @@
-from menus import *
+from menu import *
+from draw_menu import DrawMenu
+from main_menu import MainMenu
+from options_menu import OptionsMenu
+from game_menu import GameMenu
 pygame.init()
-from DrawMenu import DrawMenu
 
 class Game:
     def __init__(self, window: pygame.Surface):
