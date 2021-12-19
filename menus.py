@@ -74,9 +74,9 @@ class Menu:
         self.run_display = True
         self.offset = - 100
 
-    def draw_text(self, text, size, x, y):
+    def draw_text(self, text, size, x, y, color = (0, 0, 0)):
         font = pygame.font.Font(None, size)
-        text_surface = font.render(text, True, (255, 255, 255))
+        text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         self.screen.blit(text_surface, text_rect)
@@ -106,7 +106,7 @@ class MainMenu(Menu):
                     return 0
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_options.collidepoint(event.pos):
-                        return 2
+                        return 4
                     if self.button_quit.collidepoint(event.pos):
                         return 0
             self.screen.fill((30, 30, 30))
@@ -116,12 +116,12 @@ class MainMenu(Menu):
             self.screen.blit(text, text_)
 
             pygame.draw.rect(self.screen, yellow, self.button_options)
-            text = FONT.render('Задать параметры', True, black)
-            self.screen.blit(text, (self.button_options.x + 45, self.button_options.y + 7))
+            text = FONT.render('Начать', True, black)
+            self.screen.blit(text, (self.button_options.x + 70, self.button_options.y + 7))
 
             pygame.draw.rect(self.screen, yellow, self.button_quit)
-            text = FONT.render('Выйти из игры', True, black)
-            self.screen.blit(text, (self.button_quit.x + 55, self.button_quit.y + 7))
+            text = FONT.render('Выйти', True, black)
+            self.screen.blit(text, (self.button_quit.x + 70, self.button_quit.y + 7))
 
             pygame.display.update()
             self.clock.tick(30)

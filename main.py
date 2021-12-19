@@ -1,6 +1,6 @@
 from menus import *
 pygame.init()
-
+from DrawMenu import DrawMenu
 
 class Game:
     def __init__(self, window: pygame.Surface):
@@ -25,7 +25,7 @@ class Game:
             elif to_run == 3:
                 self.curr_menu = GameMenu(self.window, self.options_params)
             elif to_run == 4:
-                self.curr_menu = DrawMenu(self.window, self.options_params, self.game_data)
+                self.curr_menu = DrawMenu(self.window)
 
 
 if __name__ == '__main__':
