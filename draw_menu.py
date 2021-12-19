@@ -14,7 +14,8 @@ class DrawMenu(Menu):
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
         self.color = 255, 0, 0
-        self.pixel_list = []
+        self.pixel_list = [[]*700]*700
+
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
         dy = end[1]-start[1]
@@ -76,15 +77,13 @@ class DrawMenu(Menu):
 
         pygame.display.flip()
 
-    def check_pixels(self, surface):
-        k = 0
+    def check_pixels(self):
         for i in range(700):
             for j in range(700):
                 if pygame.get_at(i, j) == self.color:
-                    self.pixel_list[k] = True
+                    self.pixel_list[i][j] = True
                 else:
-                    self.pixel_list[k] = False
+                    self.pixel_list[i][j] = False
 
     def is_alive(self, car_x, car_y):
-        k = car_x + 700 * car_y
-        return self.pixel_list[k]
+        return self.pixel_list[car_x][car_y]
