@@ -10,13 +10,13 @@ class Game:
     def __init__(self, window: pygame.Surface):
         self.window = window
         self.BLACK, self.WHITE = (30, 30, 30), (255, 255, 255)
-        self.curr_menu = MainMenu(self.window)
         self.options_params = [100, 0.001, 20]  # Параметры options: размер популяции, шанс мутации, кол-во поколений
         self.is_demo = True
         self.main_menu = MainMenu(self.window)
         self.draw_menu = DrawMenu(self.window)
         self.options_menu = OptionsMenu(self.window)
         self.game_menu = GameMenu(self.window)
+        self.curr_menu = self.main_menu
 
     def run_menus(self):
         while True:
