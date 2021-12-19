@@ -109,7 +109,7 @@ def main():
                 text_.center = (DISPLAY_W / 2, (DISPLAY_H / 2) - 150)
                 screen.blit(text, text_)
 
-                if options:
+                if options == True:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if button_start.collidepoint(event.pos):
                             for box in input_boxes:
