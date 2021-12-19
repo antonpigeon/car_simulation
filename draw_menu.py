@@ -12,10 +12,10 @@ class DrawMenu(Menu):
         self.buttons = [self.button_next, self.button_clear, self.button_back]
         self.texts = ["продолжить", "очистить", "назад"]
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
-        self.road_width = 20
+        self.road_width = 30
         self.color = 255, 0, 0
         self.pixel_list = [[False]*700]*700
-        self.fitness_list = []
+        self.fitness_list = [0, 0]*700
 
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
@@ -26,7 +26,7 @@ class DrawMenu(Menu):
             y = int(start[1]+float(i)/distance*dy)
 
             pygame.draw.circle(self.screen, color, (x, y), radius)
-            self.fitness_list.append([x, y])
+            self.fitness_list[i] = [x, y]
 
     def run(self):
         finished = False
@@ -62,7 +62,7 @@ class DrawMenu(Menu):
                     self.check_pixels()
                     return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
-                    pass  # кусок кода который очистит нарисованное
+                    self.screen.fill((30, 30, 30))  # кусок кода который очистит нарисованное
                 elif button_pressed_index == 2:
                     return 1  # К главному меню
 
