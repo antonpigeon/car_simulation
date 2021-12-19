@@ -30,6 +30,7 @@ class DrawMenu(Menu):
         while finished is False:
             pygame.display.update()
             pygame.time.Clock().tick(FPS)
+            pygame.draw.rect(self.screen, (30, 30, 30), (0, 2*self.mid_h - 50, 2*self.mid_w, 50))
             i = 0
             for button in self.buttons:
                 pygame.draw.rect(self.screen, (255, 255, 0), button)
@@ -39,10 +40,10 @@ class DrawMenu(Menu):
             self.width_box.handle_event(e)
             try:
                 self.road_width = int(self.width_box.get_data())
+                print(self.road_width)
             except ValueError:
                 pass
             self.width_box.draw(self.screen)
-            pygame.display.update((0, 2*self.mid_h - 100, 2*self.mid_w, 100))
             text = FONT.render('Ширина трассы:', True, white)
             self.screen.blit(text,
                              (self.width_box.rect[0] - 100, self.width_box.rect[1] + 7))

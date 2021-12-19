@@ -48,7 +48,7 @@ class InputBox:
                     self.text += event.unicode
 
                 # Перерисовка текста.
-                self.txt_surface = FONT.render(self.text, True, self.color)
+                self.txt_surface = FONT.render(self.text, True, white)
 
     def update(self):
         # Изменение размера поля, если текст слишком длинный.
