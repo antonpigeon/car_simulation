@@ -22,7 +22,7 @@ class InputBox:
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
-        self.txt_surface = FONT.render(text, True, self.color)
+        self.txt_surface = FONT.render(text, True, white)
         self.active = False
 
     def handle_event(self, event):
