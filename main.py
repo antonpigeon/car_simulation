@@ -5,12 +5,18 @@ from options_menu import OptionsMenu
 from game_menu import GameMenu
 pygame.init()
 
+
 class Game:
     def __init__(self, window: pygame.Surface):
         self.window = window
         self.BLACK, self.WHITE = (30, 30, 30), (255, 255, 255)
         self.curr_menu = MainMenu(self.window)
         self.options_params = [100, 0.001, 20]  # Параметры options: размер популяции, шанс мутации, кол-во поколений
+        self.is_demo = True
+        self.main_menu = MainMenu(self.window)
+        self.draw_menu = DrawMenu(self.window)
+        self.options_menu = OptionsMenu(self.window)
+        self.game_menu = GameMenu(self.window)
 
     def run_menus(self):
         while True:
@@ -22,13 +28,15 @@ class Game:
                 pygame.quit()
                 break
             elif to_run == 1:
-                self.curr_menu = MainMenu(self.window)
+                self.curr_menu = self.main_menu
             elif to_run == 2:
-                self.curr_menu = OptionsMenu(self.window, self.options_params)
+                self.curr_menu = self.options_menu
             elif to_run == 3:
-                self.curr_menu = GameMenu(self.window, self.options_params)
+                self.game_menu.is_demo = self.main_menu.is_demo
+                self.game_menu.params = self.options_menu.data
+                self.curr_menu = self.game_menu
             elif to_run == 4:
-                self.curr_menu = DrawMenu(self.window)
+                self.curr_menu = self.draw_menu
 
 
 if __name__ == '__main__':

@@ -3,17 +3,17 @@ import pygame
 
 
 class OptionsMenu(Menu):
-    def __init__(self, screen, data):
+    def __init__(self, screen):
         print('running options menu')
         Menu.__init__(self, screen)
+        self.data = [100, 0.001, 20]
         self.button_start = pygame.Rect(250, 400, 200, 25)
 
-        input_box1 = InputBox(250, 230, 140, 25, str(data[0]))
-        input_box2 = InputBox(250, 290, 140, 25, str(data[1]))
-        input_box3 = InputBox(250, 350, 140, 25, str(data[2]))
+        input_box1 = InputBox(250, 230, 140, 25, str(self.data[0]))
+        input_box2 = InputBox(250, 290, 140, 25, str(self.data[1]))
+        input_box3 = InputBox(250, 350, 140, 25, str(self.data[2]))
         self.input_boxes = [input_box1, input_box2, input_box3]
 
-        self.data = data
         assert type(self.data) is list
         assert len(self.data) <= 3
 

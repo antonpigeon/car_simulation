@@ -42,11 +42,11 @@ class DrawMenu(Menu):
                         break
                 print(button_pressed_index)
                 if button_pressed_index == 0:
-                    return 2
+                    return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
                     pass  # кусок кода который очистит нарисованное
                 elif button_pressed_index == 2:
-                    return 1
+                    return 1  # К главному меню
 
                 pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
                 draw_on = True

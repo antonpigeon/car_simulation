@@ -119,7 +119,6 @@ class Car:
         elif self.y > R > self.x:
                 return cos + 6
 
-
     def __lt__(self, other_car, R=330):
         """
                 метод переопределяет оператор "меньше" для класса Car
