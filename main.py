@@ -1,3 +1,5 @@
+import pygame
+
 from menu import *
 from draw_menu import DrawMenu
 from main_menu import MainMenu
@@ -34,12 +36,13 @@ class Game:
             elif to_run == 3:
                 self.game_menu.is_demo = self.main_menu.is_demo
                 self.game_menu.params = self.options_menu.data
+                self.game_menu.reset()
                 self.curr_menu = self.game_menu
             elif to_run == 4:
                 self.curr_menu = self.draw_menu
 
 
 if __name__ == '__main__':
-    screen = pygame.display.set_mode((700, 700))
+    screen = pygame.display.set_mode((700, 700), pygame.FULLSCREEN)
     g = Game(screen)
     g.run_menus()
