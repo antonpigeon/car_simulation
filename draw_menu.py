@@ -14,7 +14,9 @@ class DrawMenu(Menu):
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
         self.color = 255, 0, 0
-        self.pixel_list = []
+        self.pixel_list = [[False]*700]*700
+        self.fitness_list = []
+
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
         dy = end[1]-start[1]
@@ -22,9 +24,9 @@ class DrawMenu(Menu):
         for i in range(distance):
             x = int(start[0]+float(i)/distance*dx)
             y = int(start[1]+float(i)/distance*dy)
-
             pygame.draw.circle(self.screen, color, (x, y), radius)
-
+            self.fitness_list[i] = [x, y]
+            self.fitness_list = []
     def run(self):
         finished = False
         FPS = 30
@@ -56,6 +58,7 @@ class DrawMenu(Menu):
                         break
                 print(button_pressed_index)
                 if button_pressed_index == 0:
+                    self.check_pixels()
                     return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
                     pass  # кусок кода который очистит нарисованное
@@ -76,15 +79,20 @@ class DrawMenu(Menu):
 
         pygame.display.flip()
 
-    def check_pixels(self, surface):
-        k = 0
+    def check_pixels(self):
         for i in range(700):
             for j in range(700):
-                if pygame.get_at(i, j) == self.color:
-                    self.pixel_list[k] = True
+                if self.screen.get_at((i, j)) == self.color:
+                    self.pixel_list[i][j] = True
                 else:
-                    self.pixel_list[k] = False
+                    self.pixel_list[i][j] = False
 
     def is_alive(self, car_x, car_y):
-        k = car_x + 700 * car_y
-        return self.pixel_list[k]
+        return self.pixel_list[car_x][car_y]
+
+    def fitness(self, car_x, car_y):
+        for n in range(len(self.fitness_list)):
+            (circle_x, circle_y) = self.fitness_list[n]
+            if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width:
+                return n
+
