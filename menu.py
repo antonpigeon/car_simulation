@@ -74,7 +74,7 @@ class Menu:
         self.run_display = True
         self.offset = - 100
 
-    def draw_text(self, text, size, x, y, color = (0, 0, 0)):
+    def draw_text(self, text, size, x, y, color=(0, 0, 0)):
         font = pygame.font.Font(None, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()

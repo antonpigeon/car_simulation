@@ -8,9 +8,9 @@ class MainMenu(Menu):
         print('Running main menu')
 
         self.is_demo = False
-        self.button_start = pygame.Rect(250, 320, 200, 25)
-        self.button_quit = pygame.Rect(250, 440, 200, 25)
-        self.button_demo = pygame.Rect(250, 380, 200, 25)
+        self.button_start = pygame.Rect(self.mid_w - 100, self.mid_h - 60, 200, 25)
+        self.button_demo = pygame.Rect(self.mid_w - 100, self.mid_h, 200, 25)
+        self.button_quit = pygame.Rect(self.mid_w - 100, self.mid_h + 60, 200, 25)
 
     def run(self):
         while True:  # да простят меня боги
@@ -24,7 +24,7 @@ class MainMenu(Menu):
                         return 0
                     if self.button_demo.collidepoint(event.pos):
                         self.is_demo = True
-                        return 3
+                        return 2
             self.screen.fill((30, 30, 30))
             text = TITLE.render('Машины хаха', True, white)
             text_ = text.get_rect()

@@ -1,4 +1,4 @@
-from menu import Menu
+from menu import Menu, white
 from car import Car
 import pygame
 
@@ -20,6 +20,12 @@ class GameMenu(Menu):
         self.dt = 0.01
         self.generation_counter = 1
 
+    def reset(self):
+        self.cars = []
+        for i in range(int(self.population_size)):
+            self.cars.append(Car(40, self.R - 10, self.screen, self.mutation_chance))
+        self.generation_counter = 1
+
     def run(self):
         if self.is_demo:
             # то, что было
@@ -30,7 +36,7 @@ class GameMenu(Menu):
                 pygame.draw.line(self.screen, 'red', (0, self.R), (self.R, self.R))
                 pygame.draw.line(self.screen, 'red', (self.R, 0), (self.R, self.R))
 
-                self.draw_text(f'Generation: {self.generation_counter}', 15, 30, 10)
+                self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 50, 20, white)
                 # обновление
                 self.clock.tick(round(1 // self.dt))
 
