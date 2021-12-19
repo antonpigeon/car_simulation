@@ -18,14 +18,14 @@ class Game:
             if to_run == 0:
                 pygame.quit()
                 break
-            #elif to_run == 1:
-                #self.curr_menu = MainMenu(self.window)
+            elif to_run == 1:
+                self.curr_menu = MainMenu(self.window)
             elif to_run == 2:
                 self.curr_menu = OptionsMenu(self.window, self.options_params)
             elif to_run == 3:
                 self.curr_menu = GameMenu(self.window, self.options_params)
-            # elif to_run == 4:
-                # self.curr_menu = GraphMenu(self.window, self.options_params, self.game_data)
+            elif to_run == 4:
+                self.curr_menu = DrawMenu(self.window, self.options_params, self.game_data)
 
 
 if __name__ == '__main__':
