@@ -14,7 +14,7 @@ class DrawMenu(Menu):
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
         self.color = 255, 0, 0
-        self.pixel_list = [[]*700]*700
+        self.pixel_list = [[False]*700]*700
 
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
@@ -57,6 +57,8 @@ class DrawMenu(Menu):
                         break
                 print(button_pressed_index)
                 if button_pressed_index == 0:
+                    self.check_pixels()
+                    print(self.pixel_list)
                     return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
                     pass  # кусок кода который очистит нарисованное
@@ -80,7 +82,7 @@ class DrawMenu(Menu):
     def check_pixels(self):
         for i in range(700):
             for j in range(700):
-                if pygame.get_at(i, j) == self.color:
+                if self.screen.get_at((i, j)) == self.color:
                     self.pixel_list[i][j] = True
                 else:
                     self.pixel_list[i][j] = False
