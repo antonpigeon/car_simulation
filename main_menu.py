@@ -24,7 +24,7 @@ class MainMenu(Menu):
                         return 0
                     if self.button_demo.collidepoint(event.pos):
                         self.is_demo = True
-                        return 3
+                        return 2
             self.screen.fill((30, 30, 30))
             text = TITLE.render('Машины хаха', True, white)
             text_ = text.get_rect()
