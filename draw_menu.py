@@ -12,10 +12,10 @@ class DrawMenu(Menu):
         self.buttons = [self.button_next, self.button_clear, self.button_back]
         self.texts = ["продолжить", "очистить", "назад"]
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
-        self.road_width = 30
+        self.road_width = 20
         self.color = 255, 0, 0
         self.pixel_list = [[False]*700]*700
-        self.fitness_list = [0, 0]*700
+        self.fitness_list = [[0, 0]]*700
 
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
