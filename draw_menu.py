@@ -77,10 +77,14 @@ class DrawMenu(Menu):
         pygame.display.flip()
 
     def check_pixels(self, surface):
+        k = 0
         for i in range(700):
             for j in range(700):
                 if pygame.get_at(i, j) == self.color:
-                    self.pixel_list[i, j] = True
+                    self.pixel_list[k] = True
                 else:
-                    self.pixel_list[i, j] = False
+                    self.pixel_list[k] = False
 
+    def is_alive(self, car_x, car_y):
+        k = car_x + 700 * car_y
+        return self.pixel_list[k]
