@@ -14,13 +14,14 @@ class DrawMenu(Menu):
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
 
-    def roundline(self, color, start, end, radius=1):
+    def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
         dy = end[1]-start[1]
         distance = max(abs(dx), abs(dy))
         for i in range(distance):
             x = int(start[0]+float(i)/distance*dx)
             y = int(start[1]+float(i)/distance*dy)
+
             pygame.draw.circle(self.screen, color, (x, y), radius)
 
     def run(self):
@@ -61,14 +62,13 @@ class DrawMenu(Menu):
                 elif button_pressed_index == 2:
                     return 1  # К главному меню
 
-                pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
                 draw_on = True
             if e.type == pygame.MOUSEBUTTONUP:
                 draw_on = False
             if e.type == pygame.MOUSEMOTION:
                 if draw_on:
-                    pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
-                    self.roundline((255, 0, 0), e.pos, last_pos, 1)
+                    self.roundline((0, 0, 0), e.pos, last_pos, self.road_width)
+
                 last_pos = e.pos
             if e.type == pygame.QUIT or \
                     (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
