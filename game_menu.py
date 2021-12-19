@@ -8,7 +8,10 @@ class GameMenu(Menu):
         print('running game menu')
         Menu.__init__(self, screen)
         self.is_demo = True
-        self.road = [[False]*700]*700
+        self.road = [[False] * 700] * 700
+        self.road_width = 20
+        self.road_color = (40, 40, 40)
+        self.offroad_color = (0, 200, 0)
         self.r = 250
         self.R = 330
         self.params = [100, 0.001, 20]
@@ -28,9 +31,9 @@ class GameMenu(Menu):
         self.generation_counter = 1
 
     def draw_road(self):
-        for i in range(len(self.road)):
-            for j in range(len(self.road)):
-                self.screen.set_at((i, j), (255, 0, 0) if self.road[i][j] is True else (0, 0, 0))
+        self.screen.fill(self.offroad_color)
+        for (x, y) in self.road:
+            pygame.draw.circle(self.screen, self.road_color, (x, y), self.road_width)
 
     def run(self):
         if self.is_demo:

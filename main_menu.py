@@ -19,6 +19,7 @@ class MainMenu(Menu):
                     return 0
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_start.collidepoint(event.pos):
+                        self.is_demo = False
                         return 4
                     if self.button_quit.collidepoint(event.pos):
                         return 0

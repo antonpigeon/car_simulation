@@ -34,6 +34,8 @@ class Game:
             elif to_run == 2:
                 self.curr_menu = self.options_menu
             elif to_run == 3:
+                self.game_menu.road = self.draw_menu.fitness_list
+                self.game_menu.road_width = self.draw_menu.road_width
                 self.game_menu.is_demo = self.main_menu.is_demo
                 self.game_menu.params = self.options_menu.data
                 self.game_menu.reset()
