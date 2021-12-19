@@ -8,6 +8,7 @@ class GameMenu(Menu):
         print('running game menu')
         Menu.__init__(self, screen)
         self.is_demo = True
+        self.road = [[False]*700]*700
         self.r = 250
         self.R = 330
         self.params = [100, 0.001, 20]
@@ -25,6 +26,11 @@ class GameMenu(Menu):
         for i in range(int(self.population_size)):
             self.cars.append(Car(40, self.R - 10, self.screen, self.mutation_chance))
         self.generation_counter = 1
+
+    def draw_road(self):
+        for i in range(len(self.road)):
+            for j in range(len(self.road)):
+                self.screen.set_at((i, j), (255, 0, 0) if self.road[i][j] is True else (0, 0, 0))
 
     def run(self):
         if self.is_demo:
@@ -73,5 +79,42 @@ class GameMenu(Menu):
                         if event.key == pygame.K_ESCAPE:
                             return 1
         else:
-            return 1  # не демо
-# может можно разделять не так радикально
+            while True:
+                # разметка
+                self.draw_road()
+                self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 50, 20, white)
+                # обновление
+                self.clock.tick(round(1 // self.dt))
+
+                all_dead = True  # флаг того, что живых не осталось
+                for car in self.cars:
+                    car.update(self.dt)
+                    if car.is_dead is False:
+                        all_dead = False
+                if all_dead is True:
+                    self.generation_counter += 1
+                    if self.generation_counter > self.generation_limit:
+                        return 1
+
+                    self.cars.sort()
+
+                    best_car1, best_car2 = self.cars[len(self.cars) - 1], self.cars[len(self.cars) - 2]
+                    best_car1.color = 'red'
+                    best_car2.color = 'red'
+                    for c in (best_car2, best_car1):
+                        c.update(self.dt)  # чтобы цвет поменялся
+                    pygame.display.update()
+                    for i in range(len(self.cars)):
+                        self.cars[i] = Car(40, self.R - 10, self.screen, self.mutation_chance)
+                        self.cars[i].genes = best_car1.genes.crossover(best_car2.genes)
+                    for car in self.cars:
+                        car.genes.mutate()
+                pygame.display.update()
+                self.screen.fill('black')
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        return 0
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            return 1
