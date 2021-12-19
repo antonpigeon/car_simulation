@@ -15,7 +15,7 @@ class DrawMenu(Menu):
         self.road_width = 30
         self.color = 255, 0, 0
         self.pixel_list = [[False]*700]*700
-        self.fitness_list = [0, 0]*700
+        self.fitness_list = []
 
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
@@ -26,7 +26,7 @@ class DrawMenu(Menu):
             y = int(start[1]+float(i)/distance*dy)
 
             pygame.draw.circle(self.screen, color, (x, y), radius)
-            self.fitness_list[i] = [x, y]
+            self.fitness_list.append([x, y])
 
     def run(self):
         finished = False
@@ -98,4 +98,3 @@ class DrawMenu(Menu):
             (circle_x, circle_y) = self.fitness_list[n]
             if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width:
                 return n
-

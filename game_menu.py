@@ -24,6 +24,13 @@ class GameMenu(Menu):
         self.dt = 0.01
         self.generation_counter = 1
 
+    def fitness(self, car_x, car_y):
+        print("aaaaaaa!!!!!!!")
+        return car_x*0 + car_y*0  # просто дефолтная штука, не используется
+
+    def fitness1(self, car):
+        return self.fitness(car.x, car.y)  # просто дефолтная штука, не используется
+
     def reset(self):
         self.cars = []
         for i in range(int(self.population_size)):
@@ -98,8 +105,8 @@ class GameMenu(Menu):
                     self.generation_counter += 1
                     if self.generation_counter > self.generation_limit:
                         return 1
-
-                    self.cars.sort()
+                    print(self.cars)
+                    self.cars.sort(key=self.fitness1)
 
                     best_car1, best_car2 = self.cars[len(self.cars) - 1], self.cars[len(self.cars) - 2]
                     best_car1.color = 'red'
