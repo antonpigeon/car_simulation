@@ -35,43 +35,43 @@ class DrawMenu(Menu):
                 pygame.draw.rect(self.screen, (255, 255, 0), button)
                 self.draw_text(self.texts[i], 15, button[0] + button[2]//2, button[1] + button[3]//2)
                 i += 1
-            for e in pygame.event.get():
-                self.width_box.handle_event(e)
-                try:
-                    self.road_width = int(self.width_box.get_data())
-                except ValueError:
-                    pass
-                self.width_box.draw(self.screen)
-                pygame.display.update((0, 2*self.mid_h - 100, 2*self.mid_w, 100))
-                text = FONT.render('Ширина трассы:', True, white)
-                self.screen.blit(text,
-                                 (self.width_box.rect[0] - 100, self.width_box.rect[1] + 7))
-                if e.type == pygame.MOUSEBUTTONDOWN:
-                    button_pressed_index = -1
-                    for i in range(len(self.buttons)):
-                        if self.buttons[i].collidepoint(*e.pos):
-                            button_pressed_index = i
-                            break
-                    print(button_pressed_index)
-                    if button_pressed_index == 0:
-                        return 2  # К меню выбора параметров
-                    elif button_pressed_index == 1:
-                        pass  # кусок кода который очистит нарисованное
-                    elif button_pressed_index == 2:
-                        return 1  # К главному меню
+            e = pygame.event.wait()
+            self.width_box.handle_event(e)
+            try:
+                self.road_width = int(self.width_box.get_data())
+            except ValueError:
+                pass
+            self.width_box.draw(self.screen)
+            pygame.display.update((0, 2*self.mid_h - 100, 2*self.mid_w, 100))
+            text = FONT.render('Ширина трассы:', True, white)
+            self.screen.blit(text,
+                             (self.width_box.rect[0] - 100, self.width_box.rect[1] + 7))
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                button_pressed_index = -1
+                for i in range(len(self.buttons)):
+                    if self.buttons[i].collidepoint(*e.pos):
+                        button_pressed_index = i
+                        break
+                print(button_pressed_index)
+                if button_pressed_index == 0:
+                    return 2  # К меню выбора параметров
+                elif button_pressed_index == 1:
+                    pass  # кусок кода который очистит нарисованное
+                elif button_pressed_index == 2:
+                    return 1  # К главному меню
 
+                pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
+                draw_on = True
+            if e.type == pygame.MOUSEBUTTONUP:
+                draw_on = False
+            if e.type == pygame.MOUSEMOTION:
+                if draw_on:
                     pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
-                    draw_on = True
-                if e.type == pygame.MOUSEBUTTONUP:
-                    draw_on = False
-                if e.type == pygame.MOUSEMOTION:
-                    if draw_on:
-                        pygame.draw.circle(self.screen, (255, 0, 0), e.pos, 1)
-                        self.roundline((255, 0, 0), e.pos, last_pos, 1)
-                    last_pos = e.pos
-                if e.type == pygame.QUIT or \
-                        (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
-                    return 0
+                    self.roundline((255, 0, 0), e.pos, last_pos, 1)
+                last_pos = e.pos
+            if e.type == pygame.QUIT or \
+                    (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
+                return 0
 
-            pygame.display.flip()
+        pygame.display.flip()
 
