@@ -4,7 +4,7 @@ from menus import Menu
 
 class DrawMenu(Menu):
     def __init__(self, surface):
-        Menu.__init__(surface)
+        Menu.__init__(self, surface)
 
     def roundline(self, color, start, end, radius=1):
         dx = end[0]-start[0]
