@@ -13,7 +13,8 @@ class DrawMenu(Menu):
         self.texts = ["продолжить", "очистить", "назад"]
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
-
+        self.color = 255, 0, 0
+        self.pixel_list = []
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
         dy = end[1]-start[1]
@@ -41,7 +42,6 @@ class DrawMenu(Menu):
             self.width_box.handle_event(e)
             try:
                 self.road_width = int(self.width_box.get_data())
-                print(self.road_width)
             except ValueError:
                 pass
             self.width_box.draw(self.screen)
@@ -67,7 +67,7 @@ class DrawMenu(Menu):
                 draw_on = False
             if e.type == pygame.MOUSEMOTION:
                 if draw_on:
-                    self.roundline((0, 0, 0), e.pos, last_pos, self.road_width)
+                    self.roundline(self.color, e.pos, last_pos, self.road_width)
 
                 last_pos = e.pos
             if e.type == pygame.QUIT or \
@@ -75,4 +75,12 @@ class DrawMenu(Menu):
                 return 0
 
         pygame.display.flip()
+
+    def check_pixels(self, surface):
+        for i in range(700):
+            for j in range(700):
+                if pygame.get_at(i, j) == self.color:
+                    self.pixel_list[i, j] = True
+                else:
+                    self.pixel_list[i, j] = False
 
