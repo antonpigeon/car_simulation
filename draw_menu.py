@@ -47,10 +47,12 @@ class DrawMenu(Menu):
                 self.road_width = int(self.width_box.get_data())
             except ValueError:
                 pass
+            pygame.draw.circle(self.screen, self.color, (40, 320), self.road_width, 4)
             self.width_box.draw(self.screen)
             text = FONT.render('Ширина трассы:', True, white)
             self.screen.blit(text,
                              (self.width_box.rect[0] - 100, self.width_box.rect[1] + 7))
+
             if e.type == pygame.MOUSEBUTTONDOWN:
                 button_pressed_index = -1
                 for i in range(len(self.buttons)):
