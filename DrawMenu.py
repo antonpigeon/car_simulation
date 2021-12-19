@@ -7,7 +7,7 @@ class DrawMenu(Menu):
         Menu.__init__(self, surface)
         self.button_next = pygame.Rect(2*self.mid_w - 100, 2*self.mid_h - 50, 70, 30)
         self.button_clear = pygame.Rect(2*self.mid_w - 200, 2*self.mid_h - 50, 70, 30)
-        self.button_back = pygame.Rect(100, 2*self.mid_h - 50, 70, 30)
+        self.button_back = pygame.Rect(30, 2*self.mid_h - 50, 70, 30)
         self.buttons = [self.button_next, self.button_clear, self.button_back]
         self.texts = ["продолжить", "очистить", "назад"]
 
