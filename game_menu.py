@@ -40,6 +40,9 @@ class GameMenu(Menu):
         for i in range(int(self.population_size)):
             self.cars.append(Car(40, self.R - 10, self.screen, self.mutation_chance))
         self.generation_counter = 1
+        self.population_size = self.params[0]
+        self.mutation_chance = self.params[1]
+        self.generation_limit = self.params[2]
 
     def draw_road(self):
         self.screen.fill(self.offroad_color)
@@ -49,7 +52,8 @@ class GameMenu(Menu):
     def run(self):
         if self.is_demo:
             # то, что было
-            while True:
+            finished = False
+            while not finished:
                 # разметка
                 pygame.draw.circle(self.screen, (255, 0, 0), (self.R, self.R), self.R, width=2)
                 pygame.draw.circle(self.screen, (255, 0, 0), (self.R, self.R), self.r, width=2)
@@ -68,7 +72,8 @@ class GameMenu(Menu):
                 if all_dead is True:
                     self.generation_counter += 1
                     if self.generation_counter > self.generation_limit:
-                        return 1
+                        finished = True
+                        break
 
                     self.cars.sort()
 
@@ -109,7 +114,8 @@ class GameMenu(Menu):
                 if all_dead is True:
                     self.generation_counter += 1
                     if self.generation_counter > self.generation_limit:
-                        return 1
+                        finished = True
+                        break
                     print(self.cars)
                     self.cars.sort(key=self.fitness1)
 
@@ -133,3 +139,20 @@ class GameMenu(Menu):
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             return 1
+
+            results_box = pygame.Rect(200, 200, 300, 300)
+            pygame.draw.rect(self.screen, (0, 0, 0), results_box)
+            pygame.draw.rect(self.screen, (255, 255, 255), results_box, width=2)
+            self.draw_text('Симуляция завершена!', 15, 350, 350, (255, 255, 255))
+            button_back = pygame.Rect(300, 380, 100, 30)
+            pygame.draw.rect(self.screen, (255, 255, 0), button_back)
+            self.draw_text("главное меню", 15, 350, 395)
+            while True:
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if button_back.collidepoint(event.pos):
+                            return 1
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            return 0
