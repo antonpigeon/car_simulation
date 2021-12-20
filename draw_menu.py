@@ -86,8 +86,8 @@ class DrawMenu(Menu):
         pygame.display.flip()
 
     def fitness(self, car_x, car_y):
-        for n in range(len(self.fitness_list)):
+        for n in range(len(self.fitness_list) - 1, -1, -1):
             (circle_x, circle_y) = self.fitness_list[n]
-            if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width:
+            if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width + 5:
                 return n
         return 0

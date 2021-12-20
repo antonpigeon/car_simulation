@@ -84,7 +84,7 @@ class GameMenu(Menu):
 
                 all_dead = True  # флаг того, что живых не осталось
                 for car in self.cars:
-                    car.update(self.dt)
+                    car.update(self.dt, True)
                     if car.is_dead is False:
                         all_dead = False
                 if all_dead is True:
@@ -99,7 +99,7 @@ class GameMenu(Menu):
                     best_car1.color = 'red'
                     best_car2.color = 'red'
                     for c in (best_car2, best_car1):
-                        c.update(self.dt)  # чтобы цвет поменялся
+                        c.update(self.dt, True)  # чтобы цвет поменялся
                     pygame.display.update()
                     for i in range(len(self.cars)):
                         self.cars[i] = Car(40, self.R - 20, self.screen, self.mutation_chance)
@@ -127,7 +127,7 @@ class GameMenu(Menu):
                 all_dead = True  # флаг того, что живых не осталось
                 for car in self.cars:
                     car.is_dead = False if self.is_alive(car.x, car.y) is True else True
-                    car.update(self.dt)
+                    car.update(self.dt, False)
                     if car.is_dead is False:
                         all_dead = False
                 if all_dead is True:
@@ -141,7 +141,7 @@ class GameMenu(Menu):
                     best_car1.color = 'red'
                     best_car2.color = 'red'
                     for c in (best_car2, best_car1):
-                        c.update(self.dt)  # чтобы цвет поменялся
+                        c.update(self.dt, False)  # чтобы цвет поменялся
                     pygame.display.update()
                     for i in range(len(self.cars)):
                         self.cars[i] = Car(40, self.R - 10, self.screen, self.mutation_chance)
@@ -158,19 +158,19 @@ class GameMenu(Menu):
                         if event.key == pygame.K_ESCAPE:
                             return 1
 
-            results_box = pygame.Rect(200, 200, 300, 300)
-            pygame.draw.rect(self.screen, (0, 0, 0), results_box)
-            pygame.draw.rect(self.screen, (255, 255, 255), results_box, width=2)
-            self.draw_text('Симуляция завершена!', 15, 350, 350, (255, 255, 255))
-            button_back = pygame.Rect(300, 380, 100, 30)
-            pygame.draw.rect(self.screen, (255, 255, 0), button_back)
-            self.draw_text("главное меню", 15, 350, 395)
-            while True:
-                pygame.display.update()
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if button_back.collidepoint(event.pos):
-                            return 1
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
-                            return 0
+        results_box = pygame.Rect(200, 200, 300, 300)
+        pygame.draw.rect(self.screen, (0, 0, 0), results_box)
+        pygame.draw.rect(self.screen, (255, 255, 255), results_box, width=2)
+        self.draw_text('Симуляция завершена!', 15, 350, 350, (255, 255, 255))
+        button_back = pygame.Rect(300, 380, 100, 30)
+        pygame.draw.rect(self.screen, (255, 255, 0), button_back)
+        self.draw_text("главное меню", 15, 350, 395)
+        while True:
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if button_back.collidepoint(event.pos):
+                        return 1
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return 0

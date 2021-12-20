@@ -58,8 +58,12 @@ class Car:
         k = (abs(self.vx * ay - self.vy * ax)) / ((self.vx ** 2 + self.vy ** 2) ** 1.5)
         return k
 
-    def update(self, dt):
-        if self.is_dead is False and self.is_alive() is True:  # переменная и функция не путать!
+    def update(self, dt, demo):
+        if demo:
+            condition = self.is_dead is False and self.is_alive() is True
+        else:
+            condition = self.is_dead is False
+        if condition:  # переменная и функция не путать!
             v = (self.vx**2 + self.vy**2) ** 0.5
             k = self.curvature()
             an_max = (v ** 2) * k

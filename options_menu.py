@@ -57,7 +57,9 @@ class OptionsMenu(Menu):
                     box.draw(self.screen)
 
             for i in range(len(self.input_boxes)):
-                self.data[i] = (float(self.input_boxes[i].get_data()))
-
+                try:
+                    self.data[i] = (float(self.input_boxes[i].get_data()))
+                except ValueError:
+                    pass
             pygame.display.update()
             self.clock.tick(30)
