@@ -8,6 +8,9 @@ pygame.init()
 
 
 class Game:
+    """
+    Основной класс, регулирующий ход программы
+    """
     def __init__(self, window: pygame.Surface):
         self.window = window
         self.BLACK, self.WHITE = (30, 30, 30), (255, 255, 255)
@@ -20,6 +23,15 @@ class Game:
         self.curr_menu = self.main_menu
 
     def run_menus(self):
+        """
+        Вызывает разные меню по очереди, отвечает за передачу данных между ними.
+        Коды меню:
+        0 - выход из программы
+        1 - MainMenu
+        2 - OptionsMenu
+        3 - GameMenu
+        4 - DrawMenu
+        """
         while True:
             self.window.fill((30, 30, 30))
             to_run = self.curr_menu.run()  # Меню делает свои дела и возвращает, к какому меню перейти

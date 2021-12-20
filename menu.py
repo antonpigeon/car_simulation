@@ -66,6 +66,11 @@ class InputBox:
 
 
 class Menu:
+    """
+    Базовый класс меню
+    От него наследуются все остальные
+    """
+
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
         self.mid_w, self.mid_h = self.screen.get_width() / 2, self.screen.get_height() / 2
@@ -75,6 +80,10 @@ class Menu:
         self.offset = - 100
 
     def draw_text(self, text, size, x, y, color=(0, 0, 0)):
+        """
+        Выводит текст на экране
+        x, y - центр текста
+        """
         font = pygame.font.Font(None, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
@@ -86,6 +95,16 @@ class Menu:
         pygame.display.update()
 
     def run(self):
+        """
+        Основной цикл меню
+        Возвращает код меню, к которому надо перейти далее.
+        Список кодов:
+        0 - выход из программы
+        1 - MainMenu
+        2 - OptionsMenu
+        3 - GameMenu
+        4 - DrawMenu
+        """
         self.draw_text('Attempt to run an empty menu! WTF?', 20, 100, 100)
         print('Attempt to run an empty menu! WTF?')
         return 0

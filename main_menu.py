@@ -26,7 +26,7 @@ class MainMenu(Menu):
                         self.is_demo = True
                         return 2
             self.screen.fill((30, 30, 30))
-            text = TITLE.render('Машины хаха', True, white)
+            text = TITLE.render('', True, white)
             text_ = text.get_rect()
             text_.center = (self.mid_w, self.mid_h - 150)
             self.screen.blit(text, text_)
