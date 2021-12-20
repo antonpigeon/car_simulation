@@ -65,6 +65,7 @@ class DrawMenu(Menu):
                     return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
                     self.screen.fill((30, 30, 30))  # кусок кода который очистит нарисованное
+                    self.fitness_list = []
                 elif button_pressed_index == 2:
                     return 1  # К главному меню
 
@@ -98,3 +99,4 @@ class DrawMenu(Menu):
             (circle_x, circle_y) = self.fitness_list[n]
             if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width:
                 return n
+        return 0
