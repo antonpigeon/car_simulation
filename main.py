@@ -46,5 +46,6 @@ class Game:
 
 if __name__ == '__main__':
     screen = pygame.display.set_mode((700, 700))
+    pygame.display.set_caption('car simulation')
     g = Game(screen)
     g.run_menus()

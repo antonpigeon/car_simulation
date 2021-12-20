@@ -13,6 +13,7 @@ class DrawMenu(Menu):
         self.texts = ["продолжить", "очистить", "назад"]
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
+        self.width_box.text = str(self.road_width)
         self.color = (255, 0, 0)
         self.pixel_list = [[False]*700]*700
         self.fitness_list = []
@@ -91,6 +92,7 @@ class DrawMenu(Menu):
             if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width + 5:
                 return n
         return 0
+
 
 if __name__ == '__main__':
     print('This module is not for direct call!')
