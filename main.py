@@ -43,6 +43,7 @@ class Game:
                 self.game_menu.reset()
                 self.curr_menu = self.game_menu
             elif to_run == 4:
+                self.draw_menu.reset()
                 self.curr_menu = self.draw_menu
 
 

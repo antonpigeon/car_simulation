@@ -17,6 +17,10 @@ class DrawMenu(Menu):
         self.pixel_list = [[False]*700]*700
         self.fitness_list = []
 
+    def reset(self):
+        self.pixel_list = [[False]*700]*700
+        self.fitness_list = []
+
     def roundline(self, color, start, end, radius):
         dx = end[0]-start[0]
         dy = end[1]-start[1]
