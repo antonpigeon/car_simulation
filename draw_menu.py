@@ -44,10 +44,10 @@ class DrawMenu(Menu):
             e = pygame.event.wait()
             self.width_box.handle_event(e)
             try:
-                self.road_width = int(self.width_box.get_data())
+                self.road_width = max(int(self.width_box.get_data()), 15)
             except ValueError:
                 pass
-            pygame.draw.circle(self.screen, self.color, (40, 320), self.road_width, 4)
+            pygame.draw.circle(self.screen, self.color, (40, 320), 20, 4)
             self.width_box.draw(self.screen)
             text = FONT.render('Ширина трассы:', True, white)
             self.screen.blit(text,
