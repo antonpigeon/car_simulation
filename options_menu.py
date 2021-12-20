@@ -63,3 +63,7 @@ class OptionsMenu(Menu):
                     pass
             pygame.display.update()
             self.clock.tick(30)
+
+
+if __name__ == '__main__':
+    print('This module is not for direct call!')

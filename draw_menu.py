@@ -34,11 +34,11 @@ class DrawMenu(Menu):
 
     def run(self):
         finished = False
-        FPS = 30
+        fps = 30
         draw_on = False
         while finished is False:
             pygame.display.update()
-            pygame.time.Clock().tick(FPS)
+            pygame.time.Clock().tick(fps)
             pygame.draw.rect(self.screen, (30, 30, 30), (0, 2*self.mid_h - 50, 2*self.mid_w, 50))
             i = 0
             for button in self.buttons:
@@ -91,3 +91,6 @@ class DrawMenu(Menu):
             if ((car_x - circle_x)**2 + (car_y - circle_y)**2)**0.5 <= self.road_width + 5:
                 return n
         return 0
+
+if __name__ == '__main__':
+    print('This module is not for direct call!')

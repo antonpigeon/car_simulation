@@ -28,7 +28,7 @@ class GameMenu(Menu):
 
     def fitness(self, car_x, car_y):
         print("aaaaaaa!!!!!!!")
-        return car_x*0 + car_y*0  # просто дефолтная штука, не используется
+        return car_x*0.0001 + car_y*0  # просто дефолтная штука, не используется
 
     def fitness1(self, car):
         return self.fitness(car.x, car.y)  # просто дефолтная штука, не используется
@@ -90,7 +90,6 @@ class GameMenu(Menu):
                 if all_dead is True:
                     self.generation_counter += 1
                     if self.generation_counter > self.generation_limit:
-                        finished = True
                         break
 
                     self.cars.sort()
@@ -133,7 +132,6 @@ class GameMenu(Menu):
                 if all_dead is True:
                     self.generation_counter += 1
                     if self.generation_counter > self.generation_limit:
-                        finished = True
                         break
                     self.cars.sort(key=self.fitness1)
 
@@ -174,3 +172,7 @@ class GameMenu(Menu):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         return 0
+
+
+if __name__ == '__main__':
+    print('This module is not for direct call!')

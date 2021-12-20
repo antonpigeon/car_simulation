@@ -121,7 +121,7 @@ class Car:
         elif self.x >= R and self.y >= R:
             return (1 - cos ** 2) ** 0.5 + 4
         elif self.y > R > self.x:
-                return cos + 6
+            return cos + 6
 
     def __lt__(self, other_car, R=330):
         """
@@ -133,8 +133,6 @@ class Car:
         else:
             if self.lifetime < other_car.lifetime:
                 return True
-
-
 
 
 if __name__ == '__main__':
