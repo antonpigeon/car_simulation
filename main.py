@@ -1,6 +1,5 @@
 import pygame
 
-from menu import *
 from draw_menu import DrawMenu
 from main_menu import MainMenu
 from options_menu import OptionsMenu
@@ -24,7 +23,6 @@ class Game:
         while True:
             self.window.fill((30, 30, 30))
             to_run = self.curr_menu.run()  # Меню делает свои дела и возвращает, к какому меню перейти
-            # print(to_run)
             assert type(to_run) is int
             if to_run == 0:
                 pygame.quit()
@@ -39,7 +37,6 @@ class Game:
                 self.game_menu.is_demo = self.main_menu.is_demo
                 self.game_menu.params = self.options_menu.data
                 self.game_menu.fitness = self.draw_menu.fitness
-                self.game_menu.is_alive = self.draw_menu.is_alive
                 self.game_menu.reset()
                 self.curr_menu = self.game_menu
             elif to_run == 4:
@@ -48,6 +45,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    screen = pygame.display.set_mode((700, 700), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((700, 700))
     g = Game(screen)
     g.run_menus()

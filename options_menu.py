@@ -4,7 +4,6 @@ import pygame
 
 class OptionsMenu(Menu):
     def __init__(self, screen):
-        print('running options menu')
         Menu.__init__(self, screen)
         self.data = [100, 0.001, 20]
         self.button_start = pygame.Rect(250, 400, 200, 25)
@@ -24,7 +23,6 @@ class OptionsMenu(Menu):
                     return 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_start.collidepoint(event.pos):
-                        print(self.data)
                         return 3
 
                 for box in self.input_boxes:

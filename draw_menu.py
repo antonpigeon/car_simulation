@@ -63,9 +63,7 @@ class DrawMenu(Menu):
                     if self.buttons[i].collidepoint(*e.pos):
                         button_pressed_index = i
                         break
-                print(button_pressed_index)
                 if button_pressed_index == 0:
-                    self.check_pixels()
                     return 2  # К меню выбора параметров
                 elif button_pressed_index == 1:
                     self.screen.fill((30, 30, 30))  # кусок кода который очистит нарисованное
@@ -86,17 +84,6 @@ class DrawMenu(Menu):
                 return 0
 
         pygame.display.flip()
-
-    def check_pixels(self):
-        for i in range(700):
-            for j in range(700):
-                if self.screen.get_at((i, j)) == self.color:
-                    self.pixel_list[i][j] = True
-                else:
-                    self.pixel_list[i][j] = False
-
-    def is_alive(self, car_x, car_y):
-        return self.pixel_list[int(car_x)][int(car_y)]
 
     def fitness(self, car_x, car_y):
         for n in range(len(self.fitness_list)):

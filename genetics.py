@@ -21,7 +21,6 @@ class Genes:
         result = Genes(self.mutation_chance)
         for i in range(self.genome_length):
             if random.random() < 0.5:
-                # print(f"crossover in gene {i}")
                 result.at_genes[i] = other_genes.at_genes[i]
                 result.an_genes[i] = other_genes.an_genes[i]
             else:

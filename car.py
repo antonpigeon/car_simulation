@@ -101,7 +101,7 @@ class Car:
         self.draw()
 
     def is_alive(self, R=330, r=250):
-        return R ** 2 > (self.x - R) ** 2 + (self.y - R) ** 2 > r ** 2 and not (0 < self.x < 100 and R + 5 < self.y < R + 10)
+        return R ** 2 > (self.x - R) ** 2 + (self.y - R) ** 2 > r ** 2 and not (0 < self.x < 100 and R - 5 < self.y < R)
 
     def fitness(self, R=330):
 
@@ -123,7 +123,7 @@ class Car:
         """
                 метод переопределяет оператор "меньше" для класса Car
                 """
-        if abs(other_car.fitness() - self.fitness()) > 1:
+        if abs(other_car.fitness() - self.fitness()) > 0.5:
             if self.fitness() < other_car.fitness():
                 return True
         else:

@@ -5,7 +5,6 @@ import pygame
 class MainMenu(Menu):
     def __init__(self, screen: pygame.Surface):
         Menu.__init__(self, screen)
-        print('Running main menu')
 
         self.is_demo = False
         self.button_start = pygame.Rect(self.mid_w - 100, self.mid_h - 60, 200, 25)
