@@ -13,7 +13,7 @@ class DrawMenu(Menu):
         self.texts = ["продолжить", "очистить", "назад"]
         self.width_box = InputBox(self.mid_w, 2*self.mid_h - 50, 140, 25)
         self.road_width = 30
-        self.color = 255, 0, 0
+        self.color = (255, 0, 0)
         self.pixel_list = [[False]*700]*700
         self.fitness_list = []
 
@@ -92,7 +92,7 @@ class DrawMenu(Menu):
                     self.pixel_list[i][j] = False
 
     def is_alive(self, car_x, car_y):
-        return self.pixel_list[car_x][car_y]
+        return self.pixel_list[int(car_x)][int(car_y)]
 
     def fitness(self, car_x, car_y):
         for n in range(len(self.fitness_list)):

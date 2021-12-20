@@ -39,6 +39,7 @@ class Game:
                 self.game_menu.is_demo = self.main_menu.is_demo
                 self.game_menu.params = self.options_menu.data
                 self.game_menu.fitness = self.draw_menu.fitness
+                self.game_menu.is_alive = self.draw_menu.is_alive
                 self.game_menu.reset()
                 self.curr_menu = self.game_menu
             elif to_run == 4:

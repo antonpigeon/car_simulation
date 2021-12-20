@@ -31,6 +31,10 @@ class GameMenu(Menu):
     def fitness1(self, car):
         return self.fitness(car.x, car.y)  # просто дефолтная штука, не используется
 
+    def is_alive(self, car_x, car_y):
+        print("bbbbbbb!!!!!")
+        return True
+
     def reset(self):
         self.cars = []
         for i in range(int(self.population_size)):
@@ -98,6 +102,7 @@ class GameMenu(Menu):
 
                 all_dead = True  # флаг того, что живых не осталось
                 for car in self.cars:
+                    car.is_dead = False if self.is_alive(car.x, car.y) is True else True
                     car.update(self.dt)
                     if car.is_dead is False:
                         all_dead = False
