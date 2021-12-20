@@ -69,6 +69,12 @@ class GameMenu(Menu):
         return self.pixel_list[int(car_x)][int(car_y)]
 
     def run(self):
+        self.population_size = self.params[0]
+        self.mutation_chance = self.params[1]
+        self.generation_limit = self.params[2]
+        self.cars = []
+        for i in range(int(self.population_size)):
+            self.cars.append(Car(40, self.R - 10, self.screen, self.mutation_chance))
         if self.is_demo:
             # то, что было
             finished = False
@@ -78,7 +84,7 @@ class GameMenu(Menu):
                 pygame.draw.circle(self.screen, (255, 0, 0), (self.R, self.R), self.r, width=2)
                 pygame.draw.line(self.screen, 'red', (0, self.R), (100, self.R))
 
-                self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 50, 20, white)
+                self.draw_text(f'Поколение: {self.generation_counter}/{int(self.generation_limit)}', 15, 50, 20, white)
                 # обновление
                 self.clock.tick(round(1 // self.dt))
 
@@ -119,7 +125,7 @@ class GameMenu(Menu):
             while True:
                 # разметка
                 self.draw_road()
-                self.draw_text(f'Поколение: {self.generation_counter}/{self.generation_limit}', 15, 50, 20, white)
+                self.draw_text(f'Поколение: {self.generation_counter}/{int(self.generation_limit)}', 15, 50, 20, white)
                 # обновление
                 self.clock.tick(round(1 // self.dt))
 
